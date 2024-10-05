@@ -1,0 +1,31 @@
+app.post('/api/register', async (req, res) => {
+    const { username, first_name, last_name, email, password } = req.body;
+
+    // Validate required fields
+    if (!username || !first_name || !last_name || !email || !password) {
+        return res.status(400).send({ error: "Bad request" });
+    }
+
+    try {
+        // Hash the password
+        const hashedPassword = await bcrypt.hash(password, saltRounds);
+
+        // Check if the username already exists
+        const [results] = await connection.promise().query(`SELECT * FROM usertable WHERE username = ?`, [username]);
+
+        if (results.length === 0) {
+            // Insert new user
+            await connection.promise().query(
+                `INSERT INTO usertable (username, first_name, last_name, email, password) VALUES (?, ?, ?, ?, ?)`,
+                [username, first_name, last_name, email, hashedPassword]
+            );
+            return res.status(201).send({ success: "Account created" });
+        } else {
+            // Username already taken
+            return res.status(400).send({ error: "Username taken" });
+        }
+    } catch (err) {
+        console.error("Error during registration:", err);
+        return res.status(500).send({ error: "Internal server error" });
+    }
+});
