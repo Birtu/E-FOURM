@@ -1,5 +1,7 @@
 const connection = require("./db");
 const bcrypt = require("bcryptjs");
+// import bcrypt from "bcryptjs";
+// import { connection } from "./db.js";
 
 const login = async (req, res) => {
   const { email, password } = req.body;
@@ -27,3 +29,4 @@ const login = async (req, res) => {
   );
 };
 module.exports = { login };
+// export {login}

@@ -1,5 +1,8 @@
 const { error } = require('console');
 const connection = require('./db')
+// import bcrypt from "bcryptjs";
+// import { connection } from "./db.js";
+
 
 
 const getQuestion = (req, res) => {
@@ -56,3 +59,4 @@ const oneQuestion = (req,res) => {
 
 
 module.exports = { getQuestion, postQuestion, oneQuestion };
+// export { getQuestion, postQuestion, oneQuestion };

@@ -1,4 +1,5 @@
 const mysql = require("mysql2");
+// import mysql from 'mysql2'
 
 // Create a MySQL connection
 const connection = mysql.createConnection({
@@ -18,4 +19,5 @@ connection.connect((err) => {
 });
 
 // Export the connection
-module.exports = connection;
+module.exports = { connection };
+// export { connection };
